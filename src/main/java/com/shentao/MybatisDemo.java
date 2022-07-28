@@ -1,3 +1,5 @@
+package com.shentao;
+
 import com.shentao.pojo.User;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -19,7 +21,7 @@ public class MybatisDemo {
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
         //执行sql
-        List<User> users = sqlSession.selectList("test.selectAll");
+        List<User> users = sqlSession.selectList("com.shentao.mapper.UserMapper.selectAll");
 
         for (User user : users) {
             System.out.println(user);

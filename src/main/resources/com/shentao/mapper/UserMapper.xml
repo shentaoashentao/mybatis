@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
-<mapper namespace="test">
+<mapper namespace="com.shentao.mapper.UserMapper">
     <select id="selectAll" resultType="com.shentao.pojo.User">
         select * from user;
     </select>

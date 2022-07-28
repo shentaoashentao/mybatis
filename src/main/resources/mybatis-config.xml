@@ -18,6 +18,7 @@
 
     <!--加载sql映射文件-->
     <mappers>
-        <mapper resource="UserMapper.xml"/>
+        <mapper resource="com/shentao/mapper/UserMapper.xml"/>
+        <mapper resource="com/shentao/mapper/BrandMapper.xml"/>
     </mappers>
 </configuration>
