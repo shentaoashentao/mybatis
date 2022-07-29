@@ -16,7 +16,6 @@
         <result column="company_name" property="companyName"/>
     </resultMap>
 
-
     <select id="selectAll" resultMap="brandResultMap">
         select * from tb_brand;
     </select>
@@ -50,4 +49,66 @@
         </where>
     </select>
 
+<!--单条件查询-->
+    <select id="selectByConditionSinglingle" resultMap="brandResultMap">
+        select *
+        from tb_brand
+        <where>
+        <choose><!--相当于switch-->
+            <when test="status != null"><!--相当于case-->
+                status = #{status}
+            </when>
+            <when test="companyName != null and companyName != ''">
+                company_name like #{companyName}
+            </when>
+            <when test="brandName != null and brandName != ''">
+                brand_name like #{brandName}
+            </when>
+        </choose>
+        </where>
+    </select>
+
+    <insert id="add" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_brand(brand_name,company_name,ordered,description,status)
+        values (#{brandName},#{companyName},#{ordered},#{description},#{status})
+    </insert>
+
+
+    <update id="update"><!--修改动态字段-->
+        update tb_brand
+        <set>
+        <if test="brandName != null and brandName != ''">
+            brand_name=#{brandName},
+        </if>
+        <if test="companyName != null and companyName != ''">
+            company_name=#{companyName},
+        </if>
+        <if test="ordered  !=  null">
+            ordered=#{ordered},
+        </if>
+        <if test="description != null and description != ''">
+            description=#{description},
+        </if>
+        <if test="status != null">
+            status=#{status}
+        </if>
+    </set>
+        where id =#{id};
+
+    </update>
+
+    <delete id="deleteById">
+    delete from tb_brand where id=#{id};
+
+    </delete>
+
+    <!--mybatis会将数组参数封装成为一个Map集合   array=数组  使用@Param注解改变map集合的默认key的名称-->
+    <delete id="deleteByIds">
+        delete from tb_brand where id
+    in(
+        <foreach collection="ids" item="id" separator=",">
+        #{id}
+        </foreach>               )
+
+    </delete>
 </mapper>
